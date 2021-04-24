@@ -70,7 +70,7 @@ public class SpiderMove : MonoBehaviour
         RaycastHit hit;
         Vector3[] points = new Vector3[] { -transform.up, transform.up, -transform.right, transform.right, -transform.forward, transform.forward };
         foreach (Vector3 pos in points)
-            if (Physics.SphereCast(transform.position,0.5f, pos, out hit, wallClipRange, RayLayers))
+            if (Physics.Raycast(transform.position+body.forward, pos, out hit, wallClipRange, RayLayers) || Physics.Raycast(transform.position, pos, out hit, wallClipRange, RayLayers))
             {
                 
                 Vector3 point = hit.point;
