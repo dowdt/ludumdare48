@@ -6,15 +6,14 @@ public class VoxelTerrain : MonoBehaviour
 {
 	static float voxelThiccc = 0.5f;
 
-	[SerializeField] uint width = 10;
-	[SerializeField] uint height = 10;
-	[SerializeField] uint depth = 10;
+	[SerializeField] float terrainWidth = 10;
+	[SerializeField] float terrainHeight = 10;
+	[SerializeField] float terrainDepth = 10;
 
 	byte[] chunkData;
 
-	[SerializeField]
-	Material material;
 	MeshFilter meshFilter;
+	MeshCollider meshCollider;
 
 	Vector3Int[] neighbours = new Vector3Int[]
 	{
@@ -59,72 +58,96 @@ public class VoxelTerrain : MonoBehaviour
 	};
 
 	Vector3[] cubeNormals = new Vector3[6] {
-		new Vector3( 1.0f,  0.0f,  0.0f), // l.0ft
 		new Vector3(-1.0f,  0.0f,  0.0f), // right
+		new Vector3( 1.0f,  0.0f,  0.0f), // left
 
 		new Vector3( 0.0f,  1.0f,  0.0f), // top
 		new Vector3( 0.0f, -1.0f,  0.0f), // bottom
 
-		new Vector3( 0.0f,  0.0f,  1.0f), //.0front
 		new Vector3( 0.0f,  0.0f, -1.0f), // back
+		new Vector3( 0.0f,  0.0f,  1.0f), //.0front
 	};
 
 	Vector2[] cubeUvs = new Vector2[] {
-		new Vector2( 1.0f, 0.0f ), // l.0ft
-		new Vector2( 1.0f, 1.0f ),
-		new Vector2( 0.0f, 1.0f ),
+		new Vector2( 1.0f, 1.0f ), // right
+		new Vector2( 1.0f, 0.0f ),
 		new Vector2( 0.0f, 1.0f ),
 		new Vector2( 0.0f, 0.0f ),
-		new Vector2( 1.0f, 0.0f ),
 
-		new Vector2( 1.0f, 0.0f ), // right
+		new Vector2( 0.0f, 0.0f ),
 		new Vector2( 1.0f, 1.0f ),
 		new Vector2( 0.0f, 1.0f ),
-		new Vector2( 0.0f, 1.0f ),
-		new Vector2( 0.0f, 0.0f ),
-		new Vector2( 1.0f, 0.0f ),
+		new Vector2( 1.0f, 0.0f ), // left
 
 		new Vector2( 0.0f, 1.0f ), // top
 		new Vector2( 1.0f, 1.0f ),
 		new Vector2( 1.0f, 0.0f ),
-		new Vector2( 1.0f, 0.0f ),
 		new Vector2( 0.0f, 0.0f ),
-		new Vector2( 0.0f, 1.0f ),
 
-		new Vector2( 0.0f, 1.0f ), // bottom
+		new Vector2( 1.0f, 1.0f ), // bottom
+		new Vector2( 1.0f, 0.0f ),
+		new Vector2( 0.0f, 1.0f ),
+		new Vector2( 0.0f, 0.0f ),
+
 		new Vector2( 1.0f, 1.0f ),
 		new Vector2( 1.0f, 0.0f ),
-		new Vector2( 1.0f, 0.0f ),
-		new Vector2( 0.0f, 0.0f ),
-		new Vector2( 0.0f, 1.0f ),
-
 		new Vector2( 0.0f, 1.0f ), // front
-		new Vector2( 1.0f, 1.0f ),
-		new Vector2( 1.0f, 0.0f ),
-		new Vector2( 1.0f, 0.0f ),
 		new Vector2( 0.0f, 0.0f ),
-		new Vector2( 0.0f, 1.0f ),
 
-		new Vector2( 0.0f, 1.0f ), // back
 		new Vector2( 1.0f, 1.0f ),
 		new Vector2( 1.0f, 0.0f ),
-		new Vector2( 1.0f, 0.0f ),
+		new Vector2( 0.0f, 1.0f ), // back
 		new Vector2( 0.0f, 0.0f ),
-		new Vector2( 0.0f, 1.0f ),
 	};
 
+	void Awake() {
+		//GetComponent<MeshCollider>().enabled = false;
+	//	GenerateMesh();
+	//	GetComponent<MeshCollider>().enabled = true;
+	}
 
-    void Start()
+	void OnDrawGizmosSelected() {
+		Gizmos.color = new Color(1, 0, 0, 0.5f);
+		Vector3 dimensions = new Vector3(terrainWidth, terrainHeight, terrainDepth);
+		Gizmos.DrawCube(transform.position + dimensions / 2, dimensions);
+	}
+
+    public void Execute()
     {
 		meshFilter = GetComponent<MeshFilter>();
+		int width  = (int) (terrainWidth  / voxelThiccc);
+		int height = (int) (terrainHeight / voxelThiccc);
+		int depth =  (int) (terrainDepth  / voxelThiccc);
+
+		Debug.Log("Width: " + width + ", Height: " + height + ", Depth: " + depth);
+
 
 		// Make voxel array
 		chunkData = new byte[width * height * depth];
 
 		for(uint i = 0; i < width * height * depth; i++) {
-			chunkData[i] = (byte) (Random.Range(0, 2) - 1);
+			chunkData[i] = 1;
 		}
+		
+		Vector3 pos;
+		for(int z = 1; z < depth-1; z++)
+		{
+			for(int y = 1; y < height-1; y++)
+			{
+				for(int x = 1; x < width-1; x++)
+				{
+					pos.x = x;
+					pos.y = y;
+					pos.z = z;
 
+					long index = x + width * (y + height * z);
+
+					if(Physics.OverlapSphere(pos * voxelThiccc + transform.position, 0.0f).Length > 0) {
+						chunkData[index] = 0;
+					}
+				}
+			}
+		}
 
 		// Find number of faces
 		List<Vector3> vertexList = new List<Vector3>();
@@ -132,16 +155,19 @@ public class VoxelTerrain : MonoBehaviour
 		List<Vector3> normalsList = new List<Vector3>();
 		List<Vector2> uvsList = new List<Vector2>();
 		int vertexCount = 0;
+		long maxIndex = 0;
+		long voxelCount = 0;
 
 		for(int z = 0; z < depth; z++)
 		{
-			for(int y = 0; y < height; y++)
+			for(int y = 0; y < height - 1; y++)
 			{
 				for(int x = 0; x < width; x++)
 				{
-					long index = x + width * (y + depth * z);
+					long index = x + width * (y + height * z);
 					if(chunkData[index] != 0)
 					{
+						voxelCount++;
 						for(int i = 0; i < 6; i++) 
 						{
 							Vector3Int n = neighbours[i];
@@ -155,7 +181,9 @@ public class VoxelTerrain : MonoBehaviour
 								(newY > 0 && newY < height)  &&
 								(newZ > 0 && newZ < depth ))
 							{
-								long newIndex = newX + width * (newY + depth * newZ);
+								long newIndex = newX + width * (newY + height * newZ);
+								if(maxIndex < newIndex)
+									maxIndex = newIndex;
 								if(chunkData[newIndex] == 0)
 								{
 									Vector3 facePos = new Vector3(x, y, z);
@@ -176,7 +204,11 @@ public class VoxelTerrain : MonoBehaviour
 									normalsList.Add(cubeNormals[i]);
 									normalsList.Add(cubeNormals[i]);
 									normalsList.Add(cubeNormals[i]);
-
+									
+									uvsList.Add(cubeUvs[i * 4 + 0]);
+									uvsList.Add(cubeUvs[i * 4 + 1]);
+									uvsList.Add(cubeUvs[i * 4 + 2]);
+									uvsList.Add(cubeUvs[i * 4 + 3]);
 									vertexCount += 4;
 								}
 							}
@@ -190,13 +222,17 @@ public class VoxelTerrain : MonoBehaviour
 		meshFilter.mesh = mesh;
 		Debug.Log("Vertex count: " + vertexCount);
 		Debug.Log("Vertex count: " + vertexList.Count);
-		Debug.Log("Index count: " + vertexList.Count);
+		Debug.Log("Index count: " + indexList.Count);
+		Debug.Log("Max Index: " + maxIndex);
+		Debug.Log("Voxel max: " + width * height * depth);
+		Debug.Log("Voxel count: " + voxelCount);
 
+		mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
 		mesh.vertices = vertexList.ToArray();
 		mesh.normals = normalsList.ToArray();
 		mesh.triangles = indexList.ToArray();
+		mesh.uv = uvsList.ToArray();
 
 		mesh.Optimize();
-		//meshFilter.material = material;
     }
 }
