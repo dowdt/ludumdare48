@@ -126,5 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onhit: 1
+  damage: 40
+  RayLayers:
+    serializedVersion: 2
+    m_Bits: 0
   centerOfGravity: {x: 0, y: 0, z: 0}
-  damage: 10

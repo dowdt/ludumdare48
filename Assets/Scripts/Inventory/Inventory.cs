@@ -9,6 +9,8 @@ public class Inventory : MonoBehaviour
 
     public Transform ItemHolder;
 
+
+
     public static int SelectedSlot = 0;
 
     public ItemStack[] initItems = new ItemStack[0];
@@ -17,8 +19,13 @@ public class Inventory : MonoBehaviour
         Items = initItems;
     }
 
+
+
     private void LateUpdate()
     {
+
+
+
         float scroll = Input.GetAxis("Mouse ScrollWheel") * 100f;
         if (scroll != 0f)
         {

@@ -9,6 +9,8 @@ public class SpiderLegGroup : MonoBehaviour
     [Range(1,10)]
     public int StepsAtOnce = 2;
 
+
+
     public int FeetOnFround()
     {
         int i = 0;

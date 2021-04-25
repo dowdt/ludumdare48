@@ -9,20 +9,26 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     OnHit onhit;
 
+    [SerializeField]
+    float damage = 50f;
 
+    [SerializeField]
+    LayerMask RayLayers;
 
     [SerializeField]
     Vector3 centerOfGravity;
 
+    Rigidbody rb;
 
 
-    [SerializeField]
-    float damage = 10;
 
     bool ishot = false;
     public void setHot() {
         ishot = true;
+        lastPos = transform.position;
     }
+
+    bool useRayCasts = false;
 
 
     private void OnCollisionEnter(Collision collision)
@@ -40,23 +46,81 @@ public class Projectile : MonoBehaviour
             case OnHit.Nothing:
                 break;
             case OnHit.Stick:
-                if (angleOffset < 60)
-                {
+
+                    DamageLink link = collision.gameObject.GetComponent<DamageLink>();
+                    if (link)
+                        link.TakeDamage(damage, "Arrow");
                     Destroy(gameObject, 20);
                     Destroy(this.GetComponent<Rigidbody>());
-                    gameObject.transform.SetParent(collision.collider.transform);
+                    gameObject.transform.SetParent(collision.collider.gameObject.transform);
                     Destroy(this);
                     Destroy(this.GetComponent<Collider>());
-                }
+                
 
                 break;
             default:
                 break;
         }
     }
+
+
+
+    public void Update()
+    {
+        //transform.forward =Vector3.Slerp(transform.forward, rb.velocity.normalized, Time.deltaTime);
+
+        if (!ishot || !useRayCasts)
+            return;
+  
+        RaycastHit hit;
+        if (Physics.Raycast(lastPos, transform.position- lastPos, out hit, Vector3.Distance(lastPos, transform.position), RayLayers))
+        {
+            float angleOffset = Vector3.Angle(hit.normal, -transform.forward);
+            Debug.DrawLine(hit.point,transform.position);
+
+            switch (onhit)
+            {
+                case OnHit.Destroy:
+                    Destroy(gameObject);
+                    break;
+                case OnHit.Nothing:
+                    break;
+                case OnHit.Stick:
+
+                        if (hit.rigidbody)
+                            hit.rigidbody.AddForceAtPosition(rb.velocity*80f,hit.point);
+
+                        DamageLink link = hit.collider.GetComponent<DamageLink>();
+                        if (link)
+                            link.TakeDamage(damage,"Arrow");
+                        
+
+                        Destroy(gameObject, 20);
+                        Destroy(this.GetComponent<Rigidbody>());
+
+                        Destroy(this);
+                        if(this.GetComponent<Collider>())
+                            Destroy(this.GetComponent<Collider>());
+                         
+                      
+                        transform.SetParent(hit.collider.transform);
+                    transform.position = hit.point;
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        lastPos = transform.position;
+    }
+    Vector3 lastPos;
+
     private void Start()
     {
-        this.GetComponent<Rigidbody>().centerOfMass = centerOfGravity;
+        rb = GetComponent<Rigidbody>();
+        useRayCasts = (GetComponent<Collider>() == null);
+        rb.centerOfMass = centerOfGravity;
 
     }
 }

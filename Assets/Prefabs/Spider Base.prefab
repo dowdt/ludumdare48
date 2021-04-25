@@ -374,7 +374,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+  - {fileID: 2100000, guid: c6c6b292ba85a1d42963a9563a4483b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -551,7 +551,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+  - {fileID: 2100000, guid: c6c6b292ba85a1d42963a9563a4483b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -938,7 +938,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+  - {fileID: 2100000, guid: c6c6b292ba85a1d42963a9563a4483b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1105,6 +1105,7 @@ GameObject:
   - component: {fileID: 4632866006527496510}
   - component: {fileID: 4632866006527496511}
   - component: {fileID: 4632866006527496504}
+  - component: {fileID: 8083170787789745271}
   m_Layer: 6
   m_Name: Spider Base
   m_TagString: Untagged
@@ -1169,6 +1170,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8083170787789745271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4632866006527496450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5642ff794497064c9cf6afcf81e7553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 100
 --- !u!1 &4632866006716753280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,6 +1281,7 @@ GameObject:
   - component: {fileID: 217312139754770462}
   - component: {fileID: 664758014244432209}
   - component: {fileID: 8755271066283692590}
+  - component: {fileID: 5405170396623474631}
   m_Layer: 6
   m_Name: Render
   m_TagString: Untagged
@@ -1314,7 +1330,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+  - {fileID: 2100000, guid: c6c6b292ba85a1d42963a9563a4483b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1350,6 +1366,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+--- !u!114 &5405170396623474631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4728721352708401761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a5cc32bb6ceac488531f4bd523ee89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageModifier: 1
+  linkToHealth: {fileID: 8083170787789745271}
 --- !u!1 &4748702791750227986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,7 +1461,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+  - {fileID: 2100000, guid: c6c6b292ba85a1d42963a9563a4483b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1540,6 +1570,7 @@ GameObject:
   - component: {fileID: 516341736534489794}
   - component: {fileID: 5812627091012012771}
   - component: {fileID: 4556472363346851062}
+  - component: {fileID: 9123458170592467893}
   m_Layer: 6
   m_Name: Render (1)
   m_TagString: Untagged
@@ -1588,7 +1619,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+  - {fileID: 2100000, guid: c6c6b292ba85a1d42963a9563a4483b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1624,6 +1655,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1550514412580984892, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+--- !u!114 &9123458170592467893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004172509237709148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a5cc32bb6ceac488531f4bd523ee89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageModifier: 2
+  linkToHealth: {fileID: 8083170787789745271}
 --- !u!1 &5490800613371506806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2014,7 +2059,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+  - {fileID: 2100000, guid: c6c6b292ba85a1d42963a9563a4483b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2179,7 +2224,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: a7b9dccc0c599734590deb4c0bb1917a, type: 3}
+  - {fileID: 2100000, guid: c6c6b292ba85a1d42963a9563a4483b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

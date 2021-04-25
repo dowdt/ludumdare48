@@ -37,6 +37,20 @@ public class ProjectileWeapon : Item
 
     bool release = true;
 
+    private void OnDisable()
+    {
+        if (inSlingBullet)
+            inSlingBullet.gameObject.SetActive(false);
+
+    }
+
+    private void OnEnable()
+    {
+        if (inSlingBullet)
+            inSlingBullet.gameObject.SetActive(true);
+
+    }
+
 
     public override void ItemInventoryUpdate()
     {

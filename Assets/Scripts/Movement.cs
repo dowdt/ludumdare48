@@ -64,28 +64,35 @@ public class Movement : MonoBehaviour
         return (canJumpTimer > 0f);
     }
 
+    public float GetVerticalMove() {
+        return VerticalMove;
+
+    }
+
+    float VerticalMove = 0f;
+    float HorizontalMove = 0f;
     private void Move()
     {
 
 
 
-        float Vertical_int = Input.GetAxisRaw("Vertical");
-        float Horizontal_int = Input.GetAxisRaw("Horizontal");
+        VerticalMove = Input.GetAxisRaw("Vertical");
+        HorizontalMove = Input.GetAxisRaw("Horizontal");
 
       
 
         float sp = Speed;
 
-        bool sprint = (Input.GetKey(KeyCode.LeftShift) && Vertical_int > 0);
+        bool sprint = (Input.GetKey(KeyCode.LeftShift) && VerticalMove > 0);
         if (sprint)
         {
-            Vertical_int *= SprintSpeedModifier;
+            VerticalMove *= SprintSpeedModifier;
 
         }
         Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView,(!sprint ? normalFOV : normalFOV*1.05f),Time.deltaTime*10f);
 
 
-        move = Vector3.Lerp(move, (transform.right * Horizontal_int + transform.forward * Vertical_int), Time.deltaTime * (onGround ? 15 : 15 * AirSpeedModifier));
+        move = Vector3.Lerp(move, (transform.right * HorizontalMove + transform.forward * VerticalMove), Time.deltaTime * (onGround ? 15 : 15 * AirSpeedModifier));
 
 
         if (onGround)
@@ -101,7 +108,8 @@ public class Movement : MonoBehaviour
             Controller.slopeLimit = 0f;
             Controller.stepOffset = 0f;
         }
-
+        if (onGround)
+            canJumpTimer = OnGroundTime;
 
         if (canJump() && Input.GetKeyDown(KeyCode.Space))
         {
@@ -115,8 +123,7 @@ public class Movement : MonoBehaviour
         Controller.Move(move * sp * Time.deltaTime + (velocity * Time.deltaTime));
 
         canJumpTimer -= Time.deltaTime;
-        if (Controller.isGrounded)
-            canJumpTimer = OnGroundTime;
+
         onGround = Controller.isGrounded;
 
 
