@@ -9,15 +9,15 @@ public class SpiderMove : MonoBehaviour
     [Header("General - must be asigned")]
 
     [SerializeField]
-    Rigidbody rb;
+    public Rigidbody rb;
 
     [SerializeField]
     Transform body;
 
     [Header("Target")]
 
-    [SerializeField]
-    Transform target;
+
+    public Vector3 target;
 
     [SerializeField]
     float Speed = 10;
@@ -39,7 +39,8 @@ public class SpiderMove : MonoBehaviour
     [SerializeField]
     LayerMask RayLayers;
 
-
+    [SerializeField]
+   public  SpiderLegGroup Legs;
 
     [SerializeField]
     float aboveGround = 3;
@@ -103,13 +104,13 @@ public class SpiderMove : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation,rot, RotationSpeed * Time.fixedDeltaTime);
 
 
-        if (target == null)
+        if (target == Vector3.zero)
             return;
 
-        if (Vector3.Distance(transform.position,new Vector3(target.position.x,transform.position.y,target.position.z)) < targetRange)
+        if (Vector3.Distance(transform.position,new Vector3(target.x,transform.position.y,target.z)) < targetRange)
             return;
 
-        Vector3 dir = (target.position - transform.position).normalized;
+        Vector3 dir = (target - transform.position).normalized;
         body.rotation = Quaternion.Lerp(body.rotation, Quaternion.LookRotation(dir,Vector3.up),Time.fixedDeltaTime * TurnSpeed);
 
         

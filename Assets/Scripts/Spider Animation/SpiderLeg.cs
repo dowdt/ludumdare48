@@ -18,7 +18,7 @@ public class SpiderLeg : MonoBehaviour
     [SerializeField]
     float stepSpeed = 5f;
 
-    [SerializeField]
+     [SerializeField]
     Transform Target;
     [SerializeField]
     Transform RayFrom;
@@ -30,6 +30,8 @@ public class SpiderLeg : MonoBehaviour
     Vector3 lastPos;
 
     float lerp = 0;
+
+    
 
     void Update()
     {

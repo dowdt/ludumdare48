@@ -6,8 +6,8 @@ public class Movement : MonoBehaviour
 {
     public Camera Cam;
 
-    
 
+    public Transform look;
 
 
     public Transform orientation;
@@ -53,7 +53,7 @@ public class Movement : MonoBehaviour
     {
         Controller.enabled = false;
         Controller.transform.position = pos;
-        Cam.transform.position = orientation.position;
+        look.position = orientation.position;
         Controller.enabled = true;
 
     }
@@ -173,8 +173,8 @@ public class Movement : MonoBehaviour
         Look();
         Move();
 
-        Cam.transform.rotation = Quaternion.Lerp(Cam.transform.rotation, Quaternion.Euler(xRotation, yRotation, 0), Time.deltaTime * 30);
-        Cam.transform.position = Vector3.Lerp(Cam.transform.position, orientation.position, Time.deltaTime * 30f);
+        look.rotation = Quaternion.Lerp(look.rotation, Quaternion.Euler(xRotation, yRotation, 0), Time.deltaTime * 30);
+        look.position = Vector3.Lerp(look.position, orientation.position, Time.deltaTime * 30f);
 
     }
 

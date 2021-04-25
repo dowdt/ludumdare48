@@ -26,6 +26,8 @@ public class Projectile : MonoBehaviour
     public void setHot() {
         ishot = true;
         lastPos = transform.position;
+
+        Destroy(gameObject,60);
     }
 
     bool useRayCasts = false;
@@ -50,7 +52,6 @@ public class Projectile : MonoBehaviour
                     DamageLink link = collision.gameObject.GetComponent<DamageLink>();
                     if (link)
                         link.TakeDamage(damage, "Arrow");
-                    Destroy(gameObject, 20);
                     Destroy(this.GetComponent<Rigidbody>());
                     gameObject.transform.SetParent(collision.collider.gameObject.transform);
                     Destroy(this);
@@ -73,7 +74,7 @@ public class Projectile : MonoBehaviour
             return;
   
         RaycastHit hit;
-        if (Physics.Raycast(lastPos, transform.position- lastPos, out hit, Vector3.Distance(lastPos, transform.position), RayLayers))
+        if (Physics.SphereCast(lastPos,0.1f, transform.position- lastPos, out hit, Vector3.Distance(lastPos, transform.position), RayLayers))
         {
             float angleOffset = Vector3.Angle(hit.normal, -transform.forward);
             Debug.DrawLine(hit.point,transform.position);
