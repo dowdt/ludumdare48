@@ -7,19 +7,33 @@ public class PlayerManager : Health
     [SerializeField]
     CameraShaker shaker;
 
-    public virtual void TakeDamage(float Amount, string source)
+    [HideInInspector]
+    public Movement move;
+
+    public override void TakeDamage(float Amount, string source, Vector3 dir)
     {
-        base.TakeDamage(Amount,source);
+
+
+        float angel = Vector3.Angle(transform.forward, -dir);
+        if(Mathf.Abs(angel) > 90)
+            Amount *= Mathf.Clamp(1f-Inventory.Items[Inventory.SelectedSlot].item.stopsDamage(),0,1f);
+
+        base.TakeDamage(Amount,source,dir);
 
 
 
         shaker.Shake((5 + (Amount*0.6f) )*(Random.Range(0, 1) == 1 ? -1 : 1)); 
     }
 
-    
-
-    public virtual void Die(string source)
+    private void Start()
     {
+        move = GetComponent<Movement>();
+    }
+
+    public override void Die(string source)
+    {
+
+        GameManager.instance.PlayerDie();
         base.Die(source);
     }
 

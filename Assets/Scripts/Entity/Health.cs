@@ -10,13 +10,21 @@ public class Health : MonoBehaviour
     [SerializeField]
     float regenSpeed = 0f;
 
-    public readonly float maxHealth = 100;
+    [SerializeField]
+    public AudioSource audioSource;
 
-    public virtual void TakeDamage(float Amount,string source) {
+    bool isded = false;
+
+
+    public float maxHealth = 100;
+
+    public virtual void TakeDamage(float Amount,string source, Vector3 dir) {
         health -= Amount;
         if (health <= 0f)
         {
-            Die(source);
+            if(!isded)
+                Die(source);
+            isded = true;
         }
     }
 

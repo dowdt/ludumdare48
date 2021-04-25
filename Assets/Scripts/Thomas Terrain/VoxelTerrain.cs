@@ -100,11 +100,7 @@ public class VoxelTerrain : MonoBehaviour
 		new Vector2( 0.0f, 0.0f ),
 	};
 
-	void Awake() {
-		//GetComponent<MeshCollider>().enabled = false;
-	//	GenerateMesh();
-	//	GetComponent<MeshCollider>().enabled = true;
-	}
+
 
 	void OnDrawGizmosSelected() {
 		Gizmos.color = new Color(1, 0, 0, 0.5f);
@@ -115,7 +111,8 @@ public class VoxelTerrain : MonoBehaviour
     public void Execute()
     {
 		meshFilter = GetComponent<MeshFilter>();
-		int width  = (int) (terrainWidth  / voxelThiccc);
+        meshCollider = GetComponent<MeshCollider>();
+        int width  = (int) (terrainWidth  / voxelThiccc);
 		int height = (int) (terrainHeight / voxelThiccc);
 		int depth =  (int) (terrainDepth  / voxelThiccc);
 
@@ -195,6 +192,8 @@ public class VoxelTerrain : MonoBehaviour
 									indexList.Add(vertexCount + 3);
 									indexList.Add(vertexCount + 1);
 
+                                    
+
 									vertexList.Add((cubeVertices[i * 4 + 0] + facePos) * voxelThiccc); // relative top left
 									vertexList.Add((cubeVertices[i * 4 + 1] + facePos) * voxelThiccc); // relative bottom left
 									vertexList.Add((cubeVertices[i * 4 + 2] + facePos) * voxelThiccc); // relative bottom right
@@ -234,5 +233,7 @@ public class VoxelTerrain : MonoBehaviour
 		mesh.uv = uvsList.ToArray();
 
 		mesh.Optimize();
+
+        meshCollider.sharedMesh = mesh;
     }
 }

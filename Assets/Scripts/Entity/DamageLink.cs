@@ -6,10 +6,10 @@ public class DamageLink : MonoBehaviour
 {
     [SerializeField]
     float DamageModifier = 1f;
-    [SerializeField]
-    Health linkToHealth;
 
-    public void TakeDamage(float damage,string source) {
-        linkToHealth.TakeDamage(damage,source);
+    public Health linkToHealth;
+
+    public void TakeDamage(float damage,string source,Vector3 dir) {
+        linkToHealth.TakeDamage(damage,source, dir);
     }
 }

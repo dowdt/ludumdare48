@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ProjectileWeapon : Item
 {
@@ -9,6 +10,10 @@ public class ProjectileWeapon : Item
         release = _release;
 
     }
+
+    [SerializeField]
+    AudioClip shooting;
+
     [SerializeField]
     float force = 300f;
 
@@ -85,6 +90,7 @@ public class ProjectileWeapon : Item
     void Shoot() {
         if (inSlingBullet != null && cooldown <= 0)
         {
+            SoundManager.instance.PlayOneShot(shooting);
             Rigidbody bulletRb = inSlingBullet.gameObject.GetComponent<Rigidbody>();
             inSlingBullet.setHot();
             if (bulletRb == null)
@@ -122,7 +128,7 @@ public class ProjectileWeapon : Item
 
             if (Input.GetMouseButton(1))
             {
-                charge = Mathf.Lerp(charge, 1, Time.deltaTime * chargeSpeed);
+                charge = Mathf.Lerp(charge, 1, Time.deltaTime * chargeSpeed * GameManager.playerInstance.move.getInWebSpeed());
             }
             else
             {

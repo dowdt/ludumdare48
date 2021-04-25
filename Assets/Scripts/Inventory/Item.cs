@@ -22,4 +22,9 @@ public class Item : MonoBehaviour
 
 
     }
+
+    public virtual float stopsDamage()
+    {
+        return 0f;
+    }
 }

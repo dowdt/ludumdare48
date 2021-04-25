@@ -47,7 +47,18 @@ public class Movement : MonoBehaviour
     float x, y;
 
 
-
+    public void setInWeb(float Time) {
+        inWebTime = Time;
+    }
+    float inWebTime = 0f;
+    public float getInWeb()
+    {
+        return Mathf.Clamp(inWebTime, 0, 2) / 2f;
+    }
+    public float getInWebSpeed()
+    {
+        return 1 - getInWeb() * 0.8f;
+    }
 
     public void setPos(Vector3 pos)
     {
@@ -74,12 +85,20 @@ public class Movement : MonoBehaviour
     private void Move()
     {
 
-
+        if (inWebTime > 0f)
+            inWebTime -= Time.deltaTime;
 
         VerticalMove = Input.GetAxisRaw("Vertical");
         HorizontalMove = Input.GetAxisRaw("Horizontal");
 
-      
+        if (!InGameUserInterface.instance.canMove())
+        {
+            VerticalMove = 0f;
+            HorizontalMove = 0f;
+        }
+        float speedMod = getInWebSpeed();
+        VerticalMove *= speedMod;
+        HorizontalMove *= speedMod;
 
         float sp = Speed;
 
@@ -148,8 +167,13 @@ public class Movement : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * 5f;
         float mouseY = Input.GetAxis("Mouse Y") * 5f;
 
-  
+        if (!InGameUserInterface.instance.canMove())
+        {
+            mouseX = 0f;
+            mouseY = 0f;
+        }
 
+     
 
         yRotation += mouseX;
 

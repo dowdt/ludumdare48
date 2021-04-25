@@ -24,6 +24,19 @@ public class SpiderAI : Health
     [SerializeField]
     float AttackRange = 2f;
 
+    [SerializeField]
+    AudioClip[] attacking;
+
+    [SerializeField]
+    AudioClip death;
+
+
+    [Header("Tracking")]
+
+    [SerializeField]
+    LayerMask PlayerMaks;
+
+
 
 
     void Start()
@@ -31,25 +44,59 @@ public class SpiderAI : Health
         SpiderMove = GetComponent<SpiderMove>();
     }
 
+
+    public bool canSeePlayer()
+    {
+        RaycastHit hit;
+
+        Debug.DrawLine(transform.position, transform.position+(GameManager.playerInstance.transform.position - transform.position)*100);
+        if (Physics.Raycast(transform.position, GameManager.playerInstance.transform.position-transform.position, out hit, 100, PlayerMaks))
+        {
+            Debug.DrawLine(transform.position, hit.point,Color.black);
+
+            if (hit.collider.gameObject == GameManager.playerInstance.gameObject)
+                return true;
+        }
+        return false;
+    }
+
+    
+    bool playedSound;
     public void Update()
     {
-        float dis = Vector3.Distance(GameManager.playerInstance.transform.position, transform.position);
-        if (dis < 100)
+        
+        if (canSeePlayer())
         {
-            if (Vector3.Distance(GameManager.playerInstance.transform.position, attackFrom.position) < AttackRange && attackCooldownTimer <= 0f)
-            {
-                attackCooldownTimer = attackCooldown;
-                GameManager.playerInstance.GetComponent<PlayerManager>().TakeDamage(damage, "Spider");
-      
-            }
-            attackCooldownTimer -= Time.deltaTime;
 
-            SpiderMove.target = GameManager.playerInstance.transform.position;
-      
+            PlayerAttack();
         }
 
 
        
+    }
+
+    public virtual void PlayerAttack() {
+        float dis = Vector3.Distance(GameManager.playerInstance.transform.position, transform.position);
+
+        if (Vector3.Distance(GameManager.playerInstance.transform.position, attackFrom.position) < AttackRange)
+        {
+            if (!playedSound && attackCooldownTimer <= 0.1f)
+            {
+                audioSource.PlayOneShot(attacking[Random.Range(0, attacking.Length - 1)]);
+                playedSound = true;
+            }
+            if (attackCooldownTimer <= 0f)
+            {
+                playedSound = false;
+                attackCooldownTimer = attackCooldown;
+                GameManager.playerInstance.GetComponent<PlayerManager>().TakeDamage(damage, "Spider", transform.position - GameManager.playerInstance.transform.position);
+            }
+
+        }
+        attackCooldownTimer -= Time.deltaTime;
+
+        SpiderMove.target = GameManager.playerInstance.transform.position;
+
     }
 
 
@@ -63,6 +110,8 @@ public class SpiderAI : Health
 
         RagDoll.transform.SetParent(null);
         setupForRagdoll(RagDoll);
+
+        audioSource.PlayOneShot(death);
 
         Destroy(gameObject);
     }

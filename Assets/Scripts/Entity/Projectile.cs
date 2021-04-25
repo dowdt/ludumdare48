@@ -18,7 +18,9 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     Vector3 centerOfGravity;
 
-    Rigidbody rb;
+
+    [HideInInspector]
+    public Rigidbody rb;
 
 
 
@@ -33,12 +35,8 @@ public class Projectile : MonoBehaviour
     bool useRayCasts = false;
 
 
-    private void OnCollisionEnter(Collision collision)
+    public virtual void onHit(GameObject collider)
     {
-        if (!ishot)
-            return;
-
-        float angleOffset = Vector3.Angle(collision.contacts[0].normal,-transform.forward);
 
         switch (onhit)
         {
@@ -49,9 +47,40 @@ public class Projectile : MonoBehaviour
                 break;
             case OnHit.Stick:
 
-                    DamageLink link = collision.gameObject.GetComponent<DamageLink>();
-                    if (link)
-                        link.TakeDamage(damage, "Arrow");
+                DamageLink link = collider.GetComponent<DamageLink>();
+                if (link)
+                    link.TakeDamage(damage, "Projectile", transform.forward);
+
+                Health h = collider.GetComponent<Health>();
+                if (h)
+                    h.TakeDamage(damage, "Projectile", transform.forward);
+
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!ishot)
+            return;
+
+        Debug.Log(collision);
+        onHit(collision.gameObject);
+
+
+        switch (onhit)
+        {
+            case OnHit.Destroy:
+                Destroy(gameObject);
+                break;
+            case OnHit.Nothing:
+                break;
+            case OnHit.Stick:
+
+                    
                     Destroy(this.GetComponent<Rigidbody>());
                     gameObject.transform.SetParent(collision.collider.gameObject.transform);
                     Destroy(this);
@@ -68,7 +97,6 @@ public class Projectile : MonoBehaviour
 
     public void Update()
     {
-        //transform.forward =Vector3.Slerp(transform.forward, rb.velocity.normalized, Time.deltaTime);
 
         if (!ishot || !useRayCasts)
             return;
@@ -76,8 +104,9 @@ public class Projectile : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(lastPos,0.1f, transform.position- lastPos, out hit, Vector3.Distance(lastPos, transform.position), RayLayers))
         {
-            float angleOffset = Vector3.Angle(hit.normal, -transform.forward);
-            Debug.DrawLine(hit.point,transform.position);
+
+            onHit(hit.collider.gameObject);
+          
 
             switch (onhit)
             {
@@ -91,10 +120,7 @@ public class Projectile : MonoBehaviour
                         if (hit.rigidbody)
                             hit.rigidbody.AddForceAtPosition(rb.velocity*80f,hit.point);
 
-                        DamageLink link = hit.collider.GetComponent<DamageLink>();
-                        if (link)
-                            link.TakeDamage(damage,"Arrow");
-                        
+                       
 
                         Destroy(gameObject, 20);
                         Destroy(this.GetComponent<Rigidbody>());
@@ -117,7 +143,7 @@ public class Projectile : MonoBehaviour
     }
     Vector3 lastPos;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         useRayCasts = (GetComponent<Collider>() == null);
