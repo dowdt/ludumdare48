@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
+    [SerializeField]
     float damage = 10f;
     private void OnTriggerStay(Collider collider)
     {
