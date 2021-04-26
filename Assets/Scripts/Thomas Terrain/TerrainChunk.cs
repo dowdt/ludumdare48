@@ -315,7 +315,12 @@ public class TerrainChunk : MonoBehaviour
                     Vector3 pos = new Vector3(x * terrain.voxelSize, y * terrain.voxelSize, z * terrain.voxelSize) + transform.position;
                     float dis = (1f / terrain.voxelSize) * terrain.SmoothAmount;
                     foreach (var item in Physics.OverlapSphere(pos, dis, terrain.Mask))
-                        chunkData[x, y, z] = (1f / dis * Vector3.Distance(item.ClosestPoint(pos), pos));
+                    {
+                        float val = (1f / dis * Vector3.Distance(item.ClosestPoint(pos), pos));
+                        if (val < chunkData[x, y, z])
+                            chunkData[x, y, z] = val;
+                    }
+
 
 
 
