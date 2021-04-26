@@ -6,10 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject Player;
-    [SerializeField]
-    Transform SpawnPoint;
+
 
     [HideInInspector]
     public bool isDead = true;
@@ -41,26 +38,15 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Vector3 point = SpawnPoint.position;
+        GameObject Player = FindObjectOfType<PlayerManager>().gameObject;
+        Vector3 point = Player.transform.position;
         RaycastHit hit;
         if (Physics.Raycast(point, Vector3.down, out hit, 10))
             point = hit.point + Vector3.up * Player.transform.localScale.y * 1.5f;
         isDead = false;
-        playerInstance = Instantiate(Player,point , SpawnPoint.rotation).GetComponent<PlayerManager>();
+        playerInstance = Player.GetComponent<PlayerManager>();
+        Player.transform.position = point;
         instance = this;
     }
 
-    private void OnDrawGizmos()
-    {
-        Vector3 point = SpawnPoint.position;
-        RaycastHit hit;
-        if (Physics.Raycast(point, Vector3.down, out hit, 10))
-        {
-            point = hit.point + Vector3.up * Player.transform.localScale.y * 1.5f;
-            Gizmos.DrawLine(SpawnPoint.position,point);
-        }
-        Gizmos.DrawIcon(SpawnPoint.position,"PlayerSpawn");
-        if (SpawnPoint)
-            Gizmos.DrawWireCube(point,new Vector3(Player.transform.localScale.x, Player.transform.localScale.y*3, Player.transform.localScale.z));
-    }
 }
