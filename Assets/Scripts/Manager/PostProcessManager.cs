@@ -13,7 +13,7 @@ public class PostProcessManager : MonoBehaviour
     private void Update()
     {
        
-        float vignetteIntensity = (0.25f + 0.25f * (1f - 1f/GameManager.playerInstance.maxHealth*GameManager.playerInstance.health));
+        float vignetteIntensity = (0.25f + 0.10f * Mathf.Clamp(1f - 1f/GameManager.playerInstance.maxHealth*GameManager.playerInstance.health,0,1));
 
         if (vignette)
             vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, vignetteIntensity, Time.deltaTime*10f);

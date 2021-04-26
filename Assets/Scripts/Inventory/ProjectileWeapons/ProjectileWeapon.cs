@@ -88,15 +88,18 @@ public class ProjectileWeapon : Item
 
     float cooldown = 0;
     void Shoot() {
+
         if (inSlingBullet != null && cooldown <= 0)
         {
             SoundManager.instance.PlayOneShot(shooting);
+    
+
             Rigidbody bulletRb = inSlingBullet.gameObject.GetComponent<Rigidbody>();
             inSlingBullet.setHot();
             if (bulletRb == null)
                 Destroy(inSlingBullet);
-            bulletRb.AddForce(charge * charge * force * transform.forward * 10);
 
+            bulletRb.AddForce(charge * charge * charge * force * transform.forward * 10);
         }
         cooldown = 0.2f;
         inSlingBullet = null;
@@ -128,7 +131,8 @@ public class ProjectileWeapon : Item
 
             if (Input.GetMouseButton(1))
             {
-                charge = Mathf.Lerp(charge, 1, Time.deltaTime * chargeSpeed * GameManager.playerInstance.move.getInWebSpeed());
+                if(charge < 1f)
+                charge = Mathf.Lerp(charge, 1.1f, Time.deltaTime * chargeSpeed * GameManager.playerInstance.move.getInWebSpeed());
             }
             else
             {

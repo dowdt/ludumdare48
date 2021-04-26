@@ -32,7 +32,7 @@ public class UserInterfaceManager : MonoBehaviour
 
             while (t > 0f)
             {
-                t -= Time.deltaTime * 2f;
+                t -= Time.deltaTime * 1f;
                 float a = FadeAnimationCurve.Evaluate(t);
                 windows[currentWindow].alpha = Mathf.Clamp(a, 0, 1);
                 yield return 0;
@@ -53,7 +53,7 @@ public class UserInterfaceManager : MonoBehaviour
 
             while (t < 1f)
             {
-                t += Time.deltaTime * 2f;
+                t += Time.deltaTime * 1f;
                 float a = FadeAnimationCurve.Evaluate(t);
       
                 windows[currentWindow].alpha = Mathf.Clamp(a,0,1);

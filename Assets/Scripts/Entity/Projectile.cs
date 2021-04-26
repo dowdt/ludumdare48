@@ -100,6 +100,8 @@ public class Projectile : MonoBehaviour
 
         if (!ishot || !useRayCasts)
             return;
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rb.velocity),Time.deltaTime*5f);
   
         RaycastHit hit;
         if (Physics.SphereCast(lastPos,0.1f, transform.position- lastPos, out hit, Vector3.Distance(lastPos, transform.position), RayLayers))

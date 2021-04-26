@@ -15,6 +15,17 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
+    [SerializeField]
+    string NextLevel;
+
+    public void PlayerWin()
+    {
+        if(NextLevel == "")
+        SceneFader.instance.fadeToNewScene(SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1).name);
+        else
+        SceneFader.instance.fadeToNewScene(NextLevel);
+    }
+
     public void PlayerDie() {
         isDead = true;
         InGameUserInterface.instance.Die();
@@ -26,7 +37,7 @@ public class GameManager : MonoBehaviour
 
         while (t > 0f)
         {
-            t -= Time.deltaTime * 3f;
+            t -= Time.deltaTime * 1f;
             AudioListener.volume = t;
             yield return 0;
 

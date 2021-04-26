@@ -22,7 +22,7 @@ public class PlayerManager : Health
 
 
 
-        shaker.Shake((5 + (Amount*0.6f) )*(Random.Range(0, 1) == 1 ? -1 : 1)); 
+        shaker.Shake(Mathf.Clamp((5 + (Amount*0.6f) )*(Random.Range(0, 1) > 0.5 ? -1 : 1),-15,15)); 
     }
 
     private void Start()

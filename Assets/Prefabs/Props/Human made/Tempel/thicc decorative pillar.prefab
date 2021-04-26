@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2878487970805391896}
   - component: {fileID: 623685471922777760}
   - component: {fileID: 7587732625977893452}
+  - component: {fileID: -151474044077532583}
   m_Layer: 0
   m_Name: thicc decorative pillar
   m_TagString: Untagged
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-151474044077532583
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633695362572289241}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8157240918252576540, guid: 5c4324e5d93ed35499830a3d27e97547, type: 3}

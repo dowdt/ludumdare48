@@ -19,6 +19,8 @@ public class TerrainSystemUsingCubeMarching : MonoBehaviour
 
 
 
+
+
     public GameObject chunk;
 
     public void GenerateChunks()
@@ -107,6 +109,10 @@ public class TerrainSystemUsingCubeMarching : MonoBehaviour
     [Tooltip("Size of physics OverlapSphere check")]
     [SerializeField]
     public float SmoothAmount = 4f;
+
+
+  
+    
 
 
     private void OnDrawGizmos()

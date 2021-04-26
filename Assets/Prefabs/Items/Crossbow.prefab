@@ -259,7 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shooting: {fileID: 8300000, guid: 13434006e7fc9c74c9698f047213819a, type: 3}
   force: 1000
-  chargeSpeed: 3
+  chargeSpeed: 2
   bullet: {fileID: 8661399385655179108, guid: 7bcc850531080f9419a1999591fa1f07, type: 3}
   inSlingBullet: {fileID: 0}
   SlingStretch: -2

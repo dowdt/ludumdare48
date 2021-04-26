@@ -57,7 +57,7 @@ public class Movement : MonoBehaviour
     }
     public float getInWebSpeed()
     {
-        return 1 - getInWeb() * 0.8f;
+        return 1 - getInWeb() * 0.9f;
     }
 
     public void setPos(Vector3 pos)

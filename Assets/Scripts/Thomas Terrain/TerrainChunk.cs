@@ -6,6 +6,7 @@ public class TerrainChunk : MonoBehaviour
 {
     //thanks sebastian lague for the epic tut
 
+    
 
     //also thnaks to that website that had all these variables
     Vector3Int[] CornerTable = new Vector3Int[8] {
@@ -289,6 +290,7 @@ public class TerrainChunk : MonoBehaviour
     };
 
 
+
     float[,,] chunkData;
 
 
@@ -297,6 +299,9 @@ public class TerrainChunk : MonoBehaviour
 
     [HideInInspector]
     public TerrainSystemUsingCubeMarching terrain;
+
+
+
 
     public void Generate(TerrainSystemUsingCubeMarching generateFrom)
     {
@@ -317,8 +322,10 @@ public class TerrainChunk : MonoBehaviour
                     foreach (var item in Physics.OverlapSphere(pos, dis, terrain.Mask))
                     {
                         float val = (1f / dis * Vector3.Distance(item.ClosestPoint(pos), pos));
+         
                         if (val < chunkData[x, y, z])
-                            chunkData[x, y, z] = val;
+                        chunkData[x, y, z] = val;
+                        
                     }
 
 

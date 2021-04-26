@@ -3,5 +3,7 @@ using System.Collections;
 using UnityEditor;
 
 public abstract class GenerateTerrainButtonScript : MonoBehaviour {
-	public abstract void Execute();
+	public abstract void GenerateChunks();
+    public abstract void Populate();
+    public abstract void Generate();
 }

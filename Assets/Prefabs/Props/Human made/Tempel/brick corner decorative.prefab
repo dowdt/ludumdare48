@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2482242706879171358}
   - component: {fileID: 2482242706879171359}
   - component: {fileID: 2482242706879171356}
+  - component: {fileID: -1318092065488797469}
   m_Layer: 0
   m_Name: brick corner decorative
   m_TagString: Untagged
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-1318092065488797469
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2482242706879171357}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8051164330885677286, guid: 5c4324e5d93ed35499830a3d27e97547, type: 3}

@@ -2034,7 +2034,7 @@ MonoBehaviour:
   rb: {fileID: 4632866006527496504}
   body: {fileID: 4632866006716753281}
   target: {x: 0, y: 0, z: 0}
-  Speed: 50
+  Speed: 70
   targetRange: 1
   TurnSpeed: 3
   RotationSpeed: 10

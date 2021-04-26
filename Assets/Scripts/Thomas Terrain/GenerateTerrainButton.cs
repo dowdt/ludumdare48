@@ -18,6 +18,7 @@ public class GenerateTerrainButton : Editor
         {
             script.GenerateChunks();
         }
+ 
     }
 
 }

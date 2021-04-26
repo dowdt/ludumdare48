@@ -30,7 +30,7 @@ public class MamaSpider : SpiderAI
             ThrowCooldownTimer = ThrowCooldown;
 
             Projectile go = Instantiate(Web,throwFrom.position,throwFrom.rotation).GetComponent<Projectile>();
-            go.rb.AddForce(go.transform.forward*ThrowForce);
+            go.rb.AddForce((throwFrom.position- GameManager.playerInstance.transform.position).normalized *ThrowForce);
             go.setHot();
 
             Destroy(go.gameObject,20);

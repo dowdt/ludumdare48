@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1994506310115924699}
   - component: {fileID: 1994506310115924698}
   - component: {fileID: 1994506310115924693}
+  - component: {fileID: 4687255334850293431}
   m_Layer: 0
   m_Name: jump platform vines
   m_TagString: Untagged
@@ -82,3 +83,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4687255334850293431
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994506310115924692}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -9146376671853890509, guid: 5c4324e5d93ed35499830a3d27e97547, type: 3}
