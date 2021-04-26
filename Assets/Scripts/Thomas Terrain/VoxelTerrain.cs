@@ -102,7 +102,8 @@ public class VoxelTerrain : MonoBehaviour
 
 
 
-	void OnDrawGizmosSelected() {
+
+    void OnDrawGizmosSelected() {
 		Gizmos.color = new Color(1, 0, 0, 0.5f);
 		Vector3 dimensions = new Vector3(terrainWidth, terrainHeight, terrainDepth);
 		Gizmos.DrawWireCube(transform.position + dimensions / 2, dimensions);

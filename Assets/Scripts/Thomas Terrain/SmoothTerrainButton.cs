@@ -2,17 +2,17 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
-[CustomEditor(typeof(Smoother))]
+[CustomEditor(typeof(TerrainSystemUsingCubeMarching))]
 public class SmoothTerrainButton : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        Smoother script = (Smoother) target;
-        if(GUILayout.Button("Smooth"))
+        TerrainSystemUsingCubeMarching script = (TerrainSystemUsingCubeMarching) target;
+        if(GUILayout.Button("Generate"))
         {
-            script.Smooth();
+            script.Generate();
         }
     }
 
